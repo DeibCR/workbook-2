@@ -3,10 +3,12 @@ package NameEditing;
 import java.util.Scanner;
 
 public class FullNameGenerator {
-    private String firstName;
+    private final String firstName;
     private String middleName;
     private String lastname;
     private String suffix;
+
+    static Scanner inputUser;
 
 
     public FullNameGenerator(String firstName, String middleName, String lastname, String suffix) {
@@ -33,9 +35,6 @@ public class FullNameGenerator {
         return suffix;
     }
 
-    public static void printName(FullNameGenerator name) {
-        System.out.println(name.getFirstName());
-    }
 
     @Override
     public String toString() {
@@ -53,21 +52,21 @@ public class FullNameGenerator {
 
     public static void main(String[] args) {
 
+        inputUser = new Scanner(System.in);
 
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter your First name: ");
-        String firstName = scanner.nextLine().trim();
+        String firstName = inputUser.nextLine().trim();
 
 
         System.out.println("Please enter your Middle name (If you have one): ");
-        String middleName = scanner.nextLine().trim();
+        String middleName = inputUser.nextLine().trim();
 
         System.out.println("Please enter yout Last Name: ");
-        String lastname = scanner.nextLine().trim();
+        String lastname = inputUser.nextLine().trim();
 
         System.out.println("Please enter your Suffix *If you have one): ");
-        String suffix = scanner.nextLine().trim();
+        String suffix = inputUser.nextLine().trim();
 
         FullNameGenerator nameGenerator = new FullNameGenerator(firstName, middleName, lastname, suffix);
 
