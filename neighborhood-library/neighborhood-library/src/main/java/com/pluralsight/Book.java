@@ -62,6 +62,8 @@ public class Book {
             this.isCheckedOut = true;
             this.checkOutTo = name;
             System.out.println("The book " + title + "has been checked out to:" + name + ".");
+            String checkoutSuccessMsg = "The book %s has been checked out to %s.";   // Read from resource bundle
+            System.out.printf(checkoutSuccessMsg, title, name);
 
         } else {
             System.out.println(title + "is checked out already. ");
@@ -73,7 +75,7 @@ public class Book {
     public void checkIn() {
         if (isCheckedOut) {
             this.isCheckedOut = false;
-            System.out.println(title + "has been checked in by: " + checkOutTo + ".");
+            System.out.println(title + " has been checked in by: " + checkOutTo + ".");
             this.checkOutTo = "";
 
         } else {

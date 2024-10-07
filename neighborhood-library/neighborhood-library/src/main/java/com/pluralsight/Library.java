@@ -78,7 +78,7 @@ public class Library {
     private static void selectLanguage(){
         System.out.println(" Select your preferred language / Seleccione su idioma preferido:");
         System.out.println("1. English");
-        System.out.println("2. Spanish");;
+        System.out.println("2. Spanish");
 
         int chooseLanguage = principalScanner.nextInt();
         principalScanner.nextLine();
@@ -99,16 +99,16 @@ public class Library {
 
     //Show all the books that are not check out
     private static void showAvailableBooks() {
-        System.out.println("\n Available Books ");
+        System.out.println(messages.getString("showAvailableBooks"));
         boolean check = false;
         for (Book book : books) { //For every object book from the class book in the array book
             if (!book.isCheckedOut()) { //And if the method ischeckedOut return a null value
-                System.out.println("ID: " + book.getId() + ", Title: " + book.getTitle() + ", ISBN: " + book.getIsbn()); //print every book available to check out
+                System.out.println(messages.getString("showList1") + book.getId() + " " + messages.getString("showList2") + book.getTitle() + " " + messages.getString("showList3")+ book.getIsbn()); //print every book available to check out
                 check = true;
             }
         }
         if (!check) { // error check point
-            System.out.println("Sorry we do not have available books at the moment, please check back later");
+            System.out.println(messages.getString("errorShow"));
         } else {
             promptCheckOut(); // Init of method that ask the user to check out a book from the past list, using the book id
         }
@@ -117,16 +117,16 @@ public class Library {
 
     //Show all the books that are check out
     private static void showCheckOutBooks() {
-        System.out.println("\n Checked Out Books ");
+        System.out.println(messages.getString("showCheckedOutBooks"));
         boolean check = false;
         for (Book book : books) { //For every object book from the class book in the array book
             if (book.isCheckedOut()) {  //And if the method ischeckedOut return a true value
-                System.out.println("ID: " + book.getId() + ", Title: " + book.getTitle() + ", Checked out to: " + book.getCheckOutTo()); //print every check out book and the name of the person who check out the book
+                System.out.println(messages.getString("showList11") + book.getId()  + " " + messages.getString("showList22")+ book.getTitle() + " " + messages.getString("showList33") + book.getCheckOutTo()); //print every check out book and the name of the person who check out the book
                 check = true;
             }
         }
         if (!check) { // error check f there is no books check out
-            System.out.println(" No books checked out. ");
+            System.out.println(messages.getString("errorShow1"));
         } else {
             promptCheckIn(); // init of method that ask the user to check in a book from the past check-out list, using the book id
         }
@@ -135,28 +135,28 @@ public class Library {
 
     //Prompt the user to check out
     private static void promptCheckOut() {
-        System.out.println("\n Would you like to check out a book? Enter the book Id or type 'X' to go back:");
+        System.out.println(messages.getString("promptCheckOut"));
         String type = principalScanner.nextLine();
         if (!type.equalsIgnoreCase("X")) {// compare if the user prompt ignoring Up or lower case is different to X
             try { // Test for error in user typing
                 int bookId = Integer.parseInt(type); //If the user prompt if different from x, parse  that String argument and return an Int, to match the variable type  int "ID" in class book.
                 checkOutBook(bookId); //Pass the new variable (ID of the book you are trying to check out ) to a method that gonna used to find and compare
             } catch (NumberFormatException e) { //Code to execute in case of error of user typing the ID
-                System.out.println("Invalid ID. Please enter the book ID.");
+                System.out.println(messages.getString("errorPromptOut"));
             }
         }
     }
 
     //Prompt the user to check in
     private static void promptCheckIn() {
-        System.out.println("\n Would you like to check in a book? Enter the book Id or type 'X' to go back:");
+        System.out.println(messages.getString("promptCheckIn"));
         String type = principalScanner.nextLine();
         if (!type.equalsIgnoreCase("X")) {// compare if the user prompt ignoring Up or lower case is different to X
             try { // Test for error in user typing
                 int bookId = Integer.parseInt(type); //Parses a String argument and return an Int, to match the variable int "ID" in class book
                 checkInBook(bookId);
             } catch (NumberFormatException e) { //Code to execute in case of error of user typing the ID
-                System.out.println("Invalid ID. Please enter the book ID.");
+                System.out.println(messages.getString("errorPromptIn"));
             }
         }
     }
@@ -165,11 +165,11 @@ public class Library {
     private static void checkOutBook(int bookID) {
         Book book = findBookID(bookID);
         if (book != null && !book.isCheckedOut()) {
-            System.out.println("Enter your name to check out the book");
+            System.out.println(messages.getString("checkOutBook"));
             String name = principalScanner.nextLine();
             book.checkOut(name);
         } else {
-            System.out.println("That book ID doesn't match our records");
+            System.out.println(messages.getString("checkOutBookError"));
         }
     }
 
@@ -179,7 +179,7 @@ public class Library {
         if (book != null && book.isCheckedOut()) {
             book.checkIn();
         } else {
-            System.out.println("That book ID doesn't match our records");
+            System.out.println(messages.getString("checkOutBookError"));
         }
     }
 
