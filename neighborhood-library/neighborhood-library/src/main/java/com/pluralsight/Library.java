@@ -1,33 +1,31 @@
 package com.pluralsight;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 
 public class Library {
 
     static Scanner principalScanner = new Scanner(System.in);
-
-
     static Book[] books = new Book[20];//Array that holds 20 Books
+    static ResourceBundle messages; // To hold the 2 language options
+
 
     public static void main(String[] args) {
-        booksArray(); //Call to the method that initialize the array (array declare out of the main method)
+        selectLanguage(); // Language Selection
+        booksArray(); //Call to initialize the array
 
         boolean keepCount = true; // Counter for the Home Screen
 
         while (keepCount) {
-            System.out.println(""" 
-                    *** Welcome to the Neighborhood Library ***
-                    
-                     1. Show Available Books
-                    
-                     2. Show Checked out Books
-                    
-                     3. Exit
-                    
-                     Please type the option you want to access: (1, 2, or 3)""");
+            System.out.println(messages.getString("welcome"));
+            System.out.println(messages.getString("option1"));
+            System.out.println(messages.getString("option2"));
+            System.out.println(messages.getString("option3"));
+            System.out.println(messages.getString("choose_option"));
 
-            int option = principalScanner.nextInt(); //read the user prompt
+            int option = principalScanner.nextInt(); //Read the user prompt
             principalScanner.nextLine();
 
 
@@ -41,12 +39,12 @@ public class Library {
                     break;
 
                 case 3:
-                    System.out.println("Exiting the neighborhood library");
+                    System.out.println(messages.getString("exit_message"));
                     keepCount = false; // Ends the loop to exit
                     break;
                 default:
-                    System.out.println("Invalid option. Please choose 1, 2, or 3.");
-                    break;
+                    System.out.println(messages.getString("invalid_option"));
+
             }//
         }
     }// End of switch 1st menu
@@ -74,6 +72,29 @@ public class Library {
         books[19] = new Book(20, "978-0-553-38407-3", "The Shining", false, "");
 
 
+    }
+
+    //Method to set the app language
+    private static void selectLanguage(){
+        System.out.println(" Select your preferred language / Seleccione su idioma preferido:");
+        System.out.println("1. English");
+        System.out.println("2. Spanish");;
+
+        int chooseLanguage = principalScanner.nextInt();
+        principalScanner.nextLine();
+
+        switch (chooseLanguage){
+            case 2:
+                setLanguage("es", "ES"); //Spanish
+                break;
+            default:
+                setLanguage("en", "US"); //Default to English
+        }
+    }
+
+    private static void setLanguage(String lang, String country){
+        Locale locale = new Locale (lang, country);
+        messages = ResourceBundle.getBundle("messages", locale);
     }
 
     //Show all the books that are not check out
