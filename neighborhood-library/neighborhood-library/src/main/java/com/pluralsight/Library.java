@@ -104,12 +104,14 @@ public class Library {
         for (Book book : books) { //For every object book from the class book in the array book
             if (!book.isCheckedOut()) { //And if the method ischeckedOut return a null value
                 System.out.println(messages.getString("showList1") + book.getId() + " " + messages.getString("showList2") + book.getTitle() + " " + messages.getString("showList3")+ book.getIsbn()); //print every book available to check out
+
                 check = true;
             }
         }
         if (!check) { // error check point
             System.out.println(messages.getString("errorShow"));
         } else {
+            principalScanner.nextLine();
             promptCheckOut(); // Init of method that ask the user to check out a book from the past list, using the book id
         }
     }
@@ -127,7 +129,9 @@ public class Library {
         }
         if (!check) { // error check f there is no books check out
             System.out.println(messages.getString("errorShow1"));
+            principalScanner.nextLine();
         } else {
+            principalScanner.nextLine();
             promptCheckIn(); // init of method that ask the user to check in a book from the past check-out list, using the book id
         }
 
@@ -167,7 +171,12 @@ public class Library {
         if (book != null && !book.isCheckedOut()) {
             System.out.println(messages.getString("checkOutBook"));
             String name = principalScanner.nextLine();
-            book.checkOut(name);
+            book.isCheckedOut= true;
+            book.checkOutTo= name;
+            System.out.println(messages.getString("message01") + book.getTitle() + messages.getString("message02") + book.checkOutTo +".");
+           principalScanner.nextLine();
+           // book.checkOut(name);
+
         } else {
             System.out.println(messages.getString("checkOutBookError"));
         }
@@ -177,7 +186,11 @@ public class Library {
     private static void checkInBook(int bookID) {
         Book book = findBookID(bookID);
         if (book != null && book.isCheckedOut()) {
-            book.checkIn();
+            book.isCheckedOut= false;
+            System.out.println(book.getTitle()  + " " + messages.getString("checkInn") + book.checkOutTo + ".");
+            book.checkOutTo="";
+
+            //book.checkIn();
         } else {
             System.out.println(messages.getString("checkOutBookError"));
         }
